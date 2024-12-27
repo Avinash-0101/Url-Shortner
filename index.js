@@ -35,12 +35,12 @@ app.use("/url",restrictedToLoggedInUser,urlRoute);
 app.use("/user",userRoute);
 app.use("/",checkAuth,staticRoute);
 
+
 // server side rendering
-app.get('/test',async (req,res)=>{
+app.get('/test',restrictedToLoggedInUser,async (req,res)=>{
   const allUrls =await URL.find({});
   return res.render('home',{
     urls:allUrls,
-
   });
 });
 

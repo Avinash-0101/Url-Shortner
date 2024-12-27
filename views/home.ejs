@@ -3,46 +3,105 @@
 <head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home Page</title>
+    <title>Home Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Show popup if the user is logged in and this is their first visit
+        window.onload = () => {
+            const loggedInMessage = "<%= locals.showPopup %>";
+            if (loggedInMessage) {
+                alert("Logged in successfully!");
+            }
+        };
+    </script>
 </head>
-<body>
-   <h1>Url Shortner</h1> 
-   <% if (locals.id) { %>
-    <p>URL Generate : http://localhost:8002/url/<%= id %></p>
-   <% } %>
-   <div>
-    <form method="POST" action ="/url">
-        <label>
-            Enter your original URL
-        </label>
-        <input type ="text" 
-        name="url"
-        placeholder="https://example.com"/>  
-        <button type ="submit"> Generate</button>
-    </form>
-   </div>
-   <div>
-        <% if (locals.urls) { %>
+<body class="bg-gray-100 font-sans">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+            <!-- Logo -->
+            <h1 class="text-2xl font-bold text-blue-600">URL Shortener</h1>
+            <!-- Navigation Links -->
+            <div class="space-x-4">
+                <% if (locals.user) { %>
+                    <span class="text-gray-600 font-medium">Hello, <%= locals.user.name %>!</span>
+                    <a href="/user/logout" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-200">Logout</a>
+                <% } else { %>
+                    <a href="/login" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">Login</a>
+                    <a href="/signup" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-200">Signup</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
 
-        <table>
-         <thead>
-                <th>S.no</th>
-                <th>ShortID</th>
-                <th>Redirect</th>
-                <th>Clicks<th>
-         </thead>
-         <tbody>
-                <% urls.forEach((url,index )=> { %>
-                <tr>
-                 <td><%= index+1 %></td>
-                 <td><%= url.shortId %></td>
-                 <td><%= url.redirectURL %></td>
-                 <td><%= url.visitHistory.length %></td>
-                </tr>
-                <% }) %>
-         </tbody>
-        </table>
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto p-6">
+        <!-- Header -->
+        <header class="mb-6">
+            <h2 class="text-3xl font-bold text-center text-blue-600">Welcome to URL Shortener</h2>
+            <% if (locals.id) { %>
+            <p class="text-center text-green-600 font-semibold mt-2">
+                URL Generated: 
+                <a href="http://localhost:8002/url/<%= id %>" class="text-blue-500 underline">
+                    http://localhost:8002/url/<%= id %>
+                </a>
+            </p>
+            <% } %>
+        </header>
+        
+        <!-- Form Section -->
+        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <form method="POST" action="/url" class="space-y-4">
+                <label class="block font-medium text-gray-700">
+                    Enter your original URL
+                </label>
+                <input 
+                    type="text" 
+                    name="url"
+                    placeholder="https://example.com"
+                    class="w-full border rounded-md p-3 focus:outline-none focus:ring focus:ring-blue-300"
+                    required
+                />
+                <button 
+                    type="submit"
+                    class="bg-blue-500 text-white rounded-md px-6 py-2 hover:bg-blue-600 transition duration-200">
+                    Generate
+                </button>
+            </form>
+        </div>
+
+        <!-- URL Table Section -->
+        <% if (locals.urls) { %>
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Your URLs</h2>
+            <table class="w-full border-collapse border border-gray-200">
+                <thead>
+                    <tr class="bg-blue-100">
+                        <th class="border border-gray-200 p-2 text-left">S. No</th>
+                        <th class="border border-gray-200 p-2 text-left">Short ID</th>
+                        <th class="border border-gray-200 p-2 text-left">Redirect URL</th>
+                        <th class="border border-gray-200 p-2 text-left">Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% urls.forEach((url, index) => { %>
+                    <tr class="<%= index % 2 === 0 ? 'bg-gray-50' : 'bg-white' %>">
+                        <td class="border border-gray-200 p-2"><%= index + 1 %></td>
+                        <td class="border border-gray-200 p-2 text-blue-500 font-medium">
+                            <%= url.shortId %>
+                        </td>
+                        <td class="border border-gray-200 p-2 text-gray-600 truncate">
+                            <a href="<%= url.redirectURL %>" target="_blank" class="text-blue-500 underline">
+                                <%= url.redirectURL %>
+                            </a>
+                        </td>
+                        <td class="border border-gray-200 p-2"><%= url.visitHistory.length %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
         <% } %>
-   </div>
+    </div>
 </body>
 </html>
