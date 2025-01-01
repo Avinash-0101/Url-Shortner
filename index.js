@@ -15,7 +15,7 @@ import staticRoute from "./routes/staticRouter.js"
 import userRoute from "./routes/user.js"
 
 const app = express();
-const PORT =8002 || process.env.PORT;
+const PORT =process.env.PORT || 8002;
 
 connectToMongoDB()
 .then(()=> console.log("mongodb connected"))
