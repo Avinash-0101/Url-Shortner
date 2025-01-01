@@ -23,7 +23,7 @@ connectToMongoDB()
 
 // view engine
 app.set("view engine","ejs");
-app.set("views",path.resolve("./views"));
+app.set("views",path.resolve("./public"));
 
 
 
