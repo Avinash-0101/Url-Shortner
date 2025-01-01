@@ -1,3 +1,6 @@
+import { configDotenv } from "dotenv";
+configDotenv();
+
 import express from "express";
 import { connectToMongoDB } from "./connect.js";
 
@@ -14,7 +17,7 @@ import userRoute from "./routes/user.js"
 const app = express();
 const PORT =8002;
 
-connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
+connectToMongoDB()
 .then(()=> console.log("mongodb connected"))
 .catch((err) => console.log("Error connecting to MongoDB:", err));
 

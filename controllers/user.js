@@ -11,7 +11,15 @@ export async function handleUserSignup(req,res){
               error: "Please fill all the boxes",
             });
         }
-
+        const existingemail = await User.findOne({
+          email: email,
+        });
+        
+        if (existingemail) {
+          return res.render("login.ejs", {
+            error: "This email is already been used",
+          });
+        }
 
         
     // Check if passwords match
@@ -28,7 +36,8 @@ export async function handleUserSignup(req,res){
         email,
         password:hashedPassword,
     });
-    return res.render("home");
+
+    return res.redirect("/SignUpsuccessful");
 } catch (error) {
   console.log("signup console error", error);
   return res.render("signUp.ejs", {

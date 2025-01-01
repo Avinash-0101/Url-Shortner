@@ -2,6 +2,7 @@ import express from "express";
 import URL from "../models/url.js";
 const router = express.Router();
 
+
 // Render home page for logged-in users with personalized URLs
 router.get("/", async (req, res) => {
     try {
@@ -28,6 +29,9 @@ router.get("/login",(req,res) => {
 
 });
 
+router.get("/SignUpsuccessful",(req,res)=>{
+    return res.render("signUpsuccesfull.ejs")
+})
 
 
 export default router;

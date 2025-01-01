@@ -19,15 +19,18 @@ async function sendVerificationEmail(email, verificationToken) {
 
     const verificationLink = `https://urlShortner/api/verifyEmail/${verificationToken}`;
     const mail = {
-      from: '"Shortner "avinashburnwal@21gmail.com',
+      from: 'avinashburnwal21@gmail.com',
       to: email,
       subject: "Verify Your Email Address",
       text: `Please click the following link to verify your email address:\n${verificationLink}`,
       html: `<b>Please click the following link to verify your email address:</b><br><a href="${verificationLink}">${verificationLink}</a>`,
     };
+    console.log("token in email verification", verificationToken)
+    
 
     // Send email
     const info = await transporter.sendMail(mail);
+    console.log(info)
 
   } catch (error) {
     res.render("/login",error)

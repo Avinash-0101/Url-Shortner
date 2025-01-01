@@ -1,7 +1,6 @@
 import { getUser } from "../service/auth.js";
 
 //
-
 export async function restrictedToLoggedInUser(req, res, next) {
     try {
         const userUid = req.cookies?.uid;
@@ -9,9 +8,9 @@ export async function restrictedToLoggedInUser(req, res, next) {
         if (!userUid) return res.redirect("/login");
 
         const user =  await getUser(userUid);
-
+        
         if (!user) return res.redirect("/login");
-
+        
         req.user = user;
         next();
     } catch (error) {
