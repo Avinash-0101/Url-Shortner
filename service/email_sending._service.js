@@ -17,7 +17,7 @@ async function sendVerificationEmail(email, verificationToken) {
       },
     });
 
-    const verificationLink = `https://urlShortner/api/verifyEmail/${verificationToken}`;
+    const verificationLink = `https://url-shortner-5v48.onrender.com/api/verifyEmail/${verificationToken}`;
     const mail = {
       from: 'avinashburnwal21@gmail.com',
       to: email,
