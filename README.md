@@ -6,7 +6,7 @@ A simple and efficient URL Shortener built using **Node.js** and **MongoDB**. Th
 
 ## Website
 
-> **Note:** The website may take 40–50 seconds to load initially as it is hosted on a free-tier service.  
+ **Note:** The website may take 40–50 seconds to load initially as it is hosted on a free-tier service.  
 Visit the application here: [https://url-shortner-5v48.onrender.com](https://url-shortner-5v48.onrender.com)
 
----
+
